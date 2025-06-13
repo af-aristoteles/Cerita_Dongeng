@@ -1,0 +1,286 @@
+:root {
+    --color-bg: #f5f7ff;
+    --color-text: #374151; /* cool dark gray */
+    --color-heading: #1e293b;
+    --color-primary: #2563eb; /* vivid blue */
+    --color-primary-hover: #3b82f6;
+    --color-secondary: #ec4899; /* pink accent */
+    --color-card-bg: white;
+    --color-shadow-light: rgba(37, 99, 235, 0.15);
+    --color-shadow-dark: rgba(0, 0, 0, 0.1);
+    --border-radius: 16px;
+
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 48px;
+    --spacing-xxl: 64px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+  
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+a:hover, a:focus {
+    color: var(--color-primary-hover);
+    outline: none;
+}
+
+header {
+    background: white;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 3px 7px var(--color-shadow-dark);
+    z-index: 1001;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+}
+nav {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: var(--color-primary);
+    user-select: none;
+}
+.nav-links {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+.nav-links a {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 6px 12px;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.nav-links a:hover, .nav-links a:focus {
+    background-color: var(--color-primary);
+    color: white;
+    outline: none;
+}
+
+main {
+    padding-top: var(--spacing-xxl);
+    padding-bottom: var(--spacing-xxl);
+}
+
+.hero {
+    max-width: 720px;
+    text-align: center;
+    margin: 0 auto var(--spacing-xxl);
+    animation: fadeIn 1s ease forwards;
+    opacity: 0;
+}
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--color-heading);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.1;
+}
+.hero p {
+    font-size: 1.25rem;
+    color: #475569;
+    margin-bottom: var(--spacing-md);
+}
+.btn-primary {
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+    padding: 16px 40px;
+    border-radius: var(--border-radius);
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.125rem;
+    box-shadow: 0 8px 25px var(--color-shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-primary:hover, .btn-primary:focus {
+    outline: none;
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px var(--color-shadow-light);
+}
+
+.stories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: var(--spacing-xl);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+}
+
+.story-card {
+    background: var(--color-card-bg);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: 0 3px 12px var(--color-shadow-dark);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.story-card:hover, .story-card:focus-visible {
+    box-shadow: 0 15px 40px var(--color-shadow-light);
+    transform: translateY(-6px);
+    outline: none;
+}
+.story-title {
+    font-weight: 700;
+    color: var(--color-secondary);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-xs);
+}
+.story-snippet {
+    flex-grow: 1;
+    color: var(--color-text);
+    font-size: 1rem;
+    white-space: pre-line;
+    line-height: 1.4;
+}
+.story-footer {
+    margin-top: var(--spacing-md);
+    font-size: 0.875rem;
+    color: #94a3b8;
+    text-align: right;
+    font-style: italic;
+}
+
+  /* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(37, 99, 235, 0.5);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    z-index: 1100;
+}
+.modal-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease forwards;
+}
+.modal-content {
+    background: white;
+    border-radius: var(--border-radius);
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    padding: var(--spacing-xl);
+    position: relative;
+    transform: scale(0.9);
+    opacity: 0;
+    animation: popIn 0.3s forwards ease 0.1s;
+}
+.modal-content:focus {
+    outline: none;
+}
+.modal-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+}
+.modal-text {
+    color: var(--color-text);
+    font-size: 1.125rem;
+    line-height: 1.75;
+    white-space: pre-line;
+}
+.modal-close-btn {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-primary);
+    transition: color 0.2s ease;
+}
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+    color: var(--color-secondary);
+    outline: none;
+}
+
+  /* Sections below same style as before but with accent color headings */
+section#about,
+section#contact {
+    max-width: 720px;
+    margin: var(--spacing-xxl) auto 0 auto;
+    padding: 0 var(--spacing-sm);
+}
+section#about h2,
+section#contact h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+}
+section#about p,
+section#contact p {
+    font-size: 1rem;
+    color: var(--color-text);
+    line-height: 1.5;
+}
+section#contact a {
+    font-weight: 600;
+}
+
+  /* Animations */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+@keyframes popIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+}
+
+  /* Responsive adjustments */
+@media (max-width: 640px) {
+    .hero h1 {
+      font-size: 2.75rem;
+    }
+    .modal-content {
+      max-width: 100%;
+      max-height: 90vh;
+      padding: var(--spacing-lg);
+    }
+}

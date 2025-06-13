@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DongengKu - Cerita Dongeng Interaktif</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav aria-label="Navigasi utama">
+      <div class="logo" tabindex="0">DongengKu</div>
+      <div class="nav-links">
+        <a href="#stories" tabindex="0">Cerita</a>
+        <a href="#about" tabindex="0">Tentang</a>
+        <a href="#contact" tabindex="0">Kontak</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="Pengantar situs" role="region">
+    <h1>Selamat datang di DongengKu</h1>
+    <p>Temukan cerita dongeng menarik dengan interaksi mudah dan warna cerah yang menyenangkan. yang mungkin belum ada di tempat lain</p>
+    <button class="btn-primary" id="btnScrollToStories" aria-label="Baca cerita dongeng">Baca Cerita</button>
+  </section>
+
+  <section id="stories" class="stories" aria-label="Daftar cerita dongeng" role="list">
+    <!-- Story cards -->
+  </section>
+
+  <section id="about" role="region" tabindex="0" aria-label="Tentang situs">
+    <h2>Tentang DongengKu</h2>
+    <p>
+      DongengKu adalah portal cerita dongeng yang baru di buat, menyajikan kisah-kisah cerita yang belum ada dimanapun (mungkin?). Silahkan nikmati cerita yang di sediakan dengan mudah di perangkat apa pun dan dimanapun.
+    </p>
+  </section>
+
+  <section id="contact" role="region" tabindex="0" aria-label="Informasi kontak">
+    <h2>Kontak</h2>
+    <p>Untuk pertanyaan atau keluhan, bisa hubungi saya melalui email:</p>
+    <p><a href="mailto:alonfatbinan@gmail.com" target="_blank">alonfatbinan@gmail.com</a></p>
+  </section>
+</main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalContent" tabindex="-1">
+  <div class="modal-content" role="document" tabindex="0">
+    <button class="modal-close-btn" aria-label="Tutup cerita">&times;</button>
+    <h3 class="modal-title" id="modalTitle"></h3>
+    <p class="modal-text" id="modalContent"></p>
+  </div>
+</div>
+
+<script>
+  // Data: stories with full content
+  const stories = [
+    {
+      title: "Malam Bintang dan Si Burung Hantu",
+      snippet: "Di sebuah hutan yang rimbun, hiduplah seekor burung hantu tua bernama Bimo. Bimo terkenal bijaksana, tapi ada satu kebiasaannya yang sering membuatnya merasa lelah – dia selalu terjaga hingga fajar, meski sebenarnya tubuhnya butuh istirahat.",
+      full: `Di sebuah hutan yang rimbun, hiduplah seekor burung hantu tua bernama Bimo. Bimo terkenal bijaksana, tapi ada satu kebiasaannya yang sering membuatnya merasa lelah – dia selalu terjaga hingga fajar, meski sebenarnya tubuhnya butuh istirahat.
+      Suatu malam, Bimo terbang melintasi hutan sambil mengamati binatang lain yang sudah terlelap. Ia melihat kelinci-kelinci kecil berpelukan hangat di sarangnya, seekor beruang besar mendengkur lembut di guanya, dan bahkan pohon-pohon pun tampak lebih damai saat malam menyelimuti.
+
+      Namun, saat Bimo kembali ke pohonnya, ia merasa tubuhnya berat dan pikirannya lamban. Bimo pun teringat nasihat dari sahabatnya, si tupai Rani, "Bimo, tubuh kita perlu istirahat. Jika terus begadang, kamu akan kehilangan energi dan kebijaksanaanmu."
+
+      Suatu malam, Bimo melihat langit berbintang lebih terang dari biasanya. Tiba-tiba, salah satu bintang yang paling bercahaya, bernama Liora, berbisik padanya, "Bimo, setiap makhluk punya waktunya sendiri untuk bersinar. Malam ini, tidurlah, dan esok kau akan terbang lebih tinggi."
+
+      Bimo pun berpikir sejenak. "Mungkin sudah saatnya aku mencoba," gumamnya. Dengan berat hati, ia menutup matanya, melipat sayapnya, dan membiarkan angin malam membelai bulunya.
+
+      Ketika fajar menyapa, Bimo bangun dengan perasaan yang belum pernah ia rasakan sebelumnya – segar dan penuh semangat. Dengan penuh tenaga, ia terbang mengelilingi hutan, menyapa hewan-hewan lain, dan menikmati pagi yang indah.
+
+      Sejak saat itu, Bimo selalu tidur cukup dan tak lagi begadang, karena ia tahu, energi yang segar di pagi hari adalah kunci untuk menjalani hari yang penuh makna.
+
+      Pesan Moral: Jangan begadang, tubuhmu butuh istirahat untuk menyiapkan kekuatan dan semangat untuk hari esok.
+      Semoga dongeng ini membuat tidurmu nyenyak dan bangun esok dengan penuh energi!`
+    },
+    {
+      title: "Langkah Kecil Aira",
+      snippet: "Di sebuah desa kecil yang tersembunyi di balik bukit, tinggal seorang remaja bernama Aira. Hidupnya tidak mudah. Ayahnya sudah tiada sejak Aira kecil, dan ibunya berjualan sayur keliling dengan sepeda tua demi menyambung hidup. Meski begitu, Aira tak pernah mengeluh. Ia tahu bahwa hidup bukan tentang apa yang kita miliki, tapi bagaimana kita menjalaninya.",
+      full: `Di sebuah desa kecil yang tersembunyi di balik bukit, tinggal seorang remaja bernama Aira. Hidupnya tidak mudah. Ayahnya sudah tiada sejak Aira kecil, dan ibunya berjualan sayur keliling dengan sepeda tua demi menyambung hidup. Meski begitu, Aira tak pernah mengeluh. Ia tahu bahwa hidup bukan tentang apa yang kita miliki, tapi bagaimana kita menjalaninya.
+
+      Setiap pagi, Aira berjalan sejauh lima kilometer ke sekolah. Hujan atau panas, ia tetap melangkah. Teman-temannya sering bertanya, “Kenapa kamu nggak pernah absen, Ra? Capek nggak?” Aira hanya tersenyum dan menjawab, “Kalau aku berhenti sekarang, siapa yang akan membuktikan bahwa mimpi itu bisa jadi nyata?”
+
+      Di balik ketegarannya, tentu Aira sering merasa lelah. Tapi setiap kali ingin menyerah, ia akan menuliskan satu kalimat di buku kecilnya: “Langkah kecil pun akan membawaku jauh, asal aku tak berhenti.” Kalimat itu menjadi mantranya, pengingat bahwa kekuatan sejati bukan soal besar langkahnya, tapi soal konsistensinya.
+
+      Suatu hari, sekolah mengadakan lomba pidato bertema “Harapan untuk Masa Depan.” Aira, yang biasanya pemalu, memberanikan diri untuk ikut. Di atas panggung, suaranya sedikit gemetar, tapi kata-katanya menyentuh hati semua orang. Ia bercerita tentang ibunya, perjuangan hidup, dan mimpinya menjadi guru agar anak-anak lain tahu bahwa mereka juga bisa bangkit meski dari titik nol.
+
+      Tepuk tangan panjang menggema di aula sekolah. Untuk pertama kalinya, Aira merasa dilihat bukan karena kekurangannya, tapi karena kekuatannya. Ia tak menang lomba hari itu, tapi ia menang melawan ketakutannya sendiri—dan itu lebih berharga dari piala mana pun.
+
+      Malam itu, di bawah langit berbintang, Aira duduk di teras rumahnya yang sederhana. Ia menatap jauh ke depan, seolah bisa melihat masa depan yang ia impikan. “Mungkin jalanku lebih panjang dari yang lain,” bisiknya pelan, “tapi aku yakin, langkah-langkahku akan sampai juga ke sana.”
+
+      Hidup tidak akan selalu mudah, dan mungkin tidak pernah sepenuhnya adil. Tapi seperti Aira, kita selalu punya pilihan: menyerah atau terus melangkah. Dan siapa tahu, satu langkah kecil kita hari ini bisa menjadi awal dari perjalanan besar esok hari.
+
+      Pesan Moral: Karena dalam hidup, yang terpenting bukan seberapa cepat kita sampai, tapi seberapa kuat kita bertahan untuk tidak berhenti.`
+    },
+    {
+      title: "Di Balik Luka, Tumbuh Kuat",
+      snippet: "Namanya Tama. Remaja laki-laki berumur 16 tahun yang dikenal pendiam dan lebih sering menyendiri. Sejak ayah dan ibunya bercerai, Tama tinggal bersama neneknya di rumah tua pinggir kota. Di sekolah, ia bukan siapa-siapa. Tak pintar, tak populer, tak juga pandai bersosialisasi. Tapi ada satu hal yang ia punya: ketahanan.",
+      full: `Namanya Tama. Remaja laki-laki berumur 16 tahun yang dikenal pendiam dan lebih sering menyendiri. Sejak ayah dan ibunya bercerai, Tama tinggal bersama neneknya di rumah tua pinggir kota. Di sekolah, ia bukan siapa-siapa. Tak pintar, tak populer, tak juga pandai bersosialisasi. Tapi ada satu hal yang ia punya: ketahanan.
+
+      Setiap sore, setelah pulang sekolah, Tama membantu neneknya menjual gorengan di depan rumah. Banyak anak seumurannya yang meledek. “Masa remaja kok jualan?” ejek mereka. Tama diam saja. Ia tahu mulut orang tak bisa dibungkam, tapi hatinya harus tetap dijaga agar tidak ikut hancur.
+
+      Yang tak banyak orang tahu, Tama menabung sebagian dari hasil jualannya. Ia menyisihkan uang demi bisa membeli buku-buku bekas dan belajar desain grafis dari warnet dekat pasar. Ia percaya, meski hidupnya sekarang berat, masa depannya tetap bisa ia bentuk—asal ia tak berhenti mencoba.
+
+      Suatu hari, sekolah mengadakan lomba desain poster untuk kampanye anti-bullying. Tama mengirimkan karyanya diam-diam, tanpa berharap banyak. Posternya sederhana: gambar seorang anak yang wajahnya penuh luka, tapi di balik lukanya tumbuh bunga-bunga kecil. Di bawahnya tertulis: “Luka bukan akhir dari hidup. Kadang dari situlah kekuatan tumbuh.”
+
+      Poster itu memenangkan lomba. Guru-guru terkesan, dan teman-teman yang dulu mengejek mulai melihat Tama dengan cara berbeda. Tapi lebih dari semua itu, Tama merasa lega. Akhirnya ada yang mendengar suara kecil dalam dirinya yang selama ini ia jaga diam-diam.
+
+      Malam harinya, Tama menatap cermin dan berkata pada dirinya sendiri, “Aku tidak sempurna. Aku punya luka. Tapi aku tidak hancur. Dan itu cukup untuk terus berjalan.” Kata-kata itu ia ulangi setiap malam, seperti mantra agar ia tetap kuat menghadapi hari esok.
+
+      Tak semua orang memulai hidup dari tempat yang mudah. Beberapa, seperti Tama, harus berjalan lebih jauh, lebih berat, dan lebih sepi. Tapi bukan berarti mereka kalah. Justru di situlah mereka belajar: bagaimana bertahan, bagaimana tumbuh, dan bagaimana mengubah luka jadi kekuatan.
+
+      Pesan Moral: Sebab dalam hidup, bukan siapa yang paling cepat yang menang—tapi siapa yang tetap melangkah, meski tertatih.`
+    },
+    {
+      title: "Langit Tidak Selalu Biru",
+      snippet: "Alya adalah siswi SMA yang dikenal ceria. Tapi di balik senyum lebarnya, ia menyimpan beban berat. Nilai-nilainya menurun, orang tuanya sering bertengkar, dan sahabatnya menjauh tanpa penjelasan. Ia sering menatap langit dari jendela kamarnya, berharap ada jawaban dari atas sana",
+      full: `Alya adalah siswi SMA yang dikenal ceria. Tapi di balik senyum lebarnya, ia menyimpan beban berat. Nilai-nilainya menurun, orang tuanya sering bertengkar, dan sahabatnya menjauh tanpa penjelasan. Ia sering menatap langit dari jendela kamarnya, berharap ada jawaban dari atas sana.
+
+      Suatu malam, saat hujan turun deras, Alya menulis di buku hariannya: “Kenapa hidupku berubah secepat ini? Dulu semuanya baik-baik saja.” Ia merasa kehilangan arah. Tak ada pelukan, tak ada tempat bertanya. Bahkan dirinya sendiri terasa asing.
+
+      Keesokan harinya, ia duduk di taman sekolah sendirian, sampai seorang guru seni mendekat dan duduk di sampingnya. “Kamu tahu, Alya,” katanya pelan, “langit itu nggak selalu biru. Tapi meski mendung, langit tetap langit. Ia tak kehilangan nilainya, hanya karena warnanya berubah.”
+
+      Kata-kata itu menggugah Alya. Untuk pertama kalinya, ia sadar bahwa perubahan tidak selalu berarti kehancuran. Kadang, perubahan adalah cara hidup mengajarkan kita bertahan.
+
+      Ia mulai menulis puisi. Menyalurkan rasa sesaknya ke kata-kata. Ia mulai menata ulang waktunya, belajar lebih disiplin, dan pelan-pelan menerima bahwa tidak semua hubungan bisa dipertahankan, tapi hidup harus terus dijalani.
+
+      Saat puisi-puisinya dimuat di majalah sekolah, teman-temannya kembali mendekat. Tapi kali ini, Alya tidak menggantungkan kebahagiaannya pada mereka. Ia sudah belajar mencintai dirinya sendiri, bahkan saat langit hatinya masih sedikit kelabu.
+
+      Pesan Moral: Hidup tak akan selalu cerah. Tapi itu bukan alasan untuk berhenti tumbuh. Justru di tengah hujan, kita bisa belajar bahwa ketabahan lebih indah dari sekadar kebahagiaan.
+
+      Karena kita tak harus selalu bersinar untuk berharga. Kadang cukup bertahan, dan itu sudah luar biasa.`
+    },
+    {
+      title: "Rumah Di Dalam Diri",
+      snippet: "Davin selalu merasa tidak cocok di mana pun ia berada. Di sekolah, ia terlalu pendiam. Di rumah, orang tuanya sibuk sendiri. Di tongkrongan, ia merasa seperti bayangan—selalu ada, tapi tak pernah benar-benar dilihat.",
+      full: `Davin selalu merasa tidak cocok di mana pun ia berada. Di sekolah, ia terlalu pendiam. Di rumah, orang tuanya sibuk sendiri. Di tongkrongan, ia merasa seperti bayangan—selalu ada, tapi tak pernah benar-benar dilihat.
+
+      Ia pernah mencoba mengubah dirinya: menjadi lebih lucu, lebih keras, lebih seperti yang "disukai banyak orang." Tapi semakin ia berpura-pura, semakin lelah hatinya. Ia bertanya-tanya, “Kenapa aku harus jadi orang lain hanya untuk diterima?”
+
+      Suatu malam, Davin duduk di balkon rumah, memandangi lampu-lampu kota. Ia lalu membuka catatan digital di ponselnya dan menulis: “Aku ingin menjadi tempat yang nyaman untuk diriku sendiri. Kalau orang lain tak mengerti, setidaknya aku tidak boleh meninggalkan diriku sendiri.”
+
+      Itulah awal perubahan. Ia mulai menulis jurnal harian, membaca buku-buku filsafat ringan, dan berbicara jujur pada dirinya sendiri. Ia tak lagi memaksa masuk ke dalam lingkaran yang tak cocok, tapi mulai membangun ruang di mana ia bisa tumbuh tanpa tekanan.
+
+      Pelan-pelan, ketenangan datang. Teman baru pun hadir, bukan karena Davin berubah, tapi karena ia lebih jujur menjadi dirinya sendiri. Dan ternyata, kejujuran itulah yang membuatnya bersinar.
+
+      Pesan Moral: Hidup tidak selalu tentang menjadi disukai banyak orang. Kadang, cukup menjadi tempat pulang bagi diri sendiri saja sudah lebih dari cukup.
+
+      Karena sejauh apa pun kita pergi, rumah terbaik adalah ketika kita bisa berdamai dengan diri sendiri.`
+    }
+  ];
+
+  const storiesContainer = document.getElementById('stories');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalContent = document.getElementById('modalContent');
+  const modalCloseBtn = modalOverlay.querySelector('.modal-close-btn');
+  const btnScrollToStories = document.getElementById('btnScrollToStories');
+
+  // Generate story cards dynamically with snippet
+  function renderStories() {
+    stories.forEach((story, index) => {
+      const card = document.createElement('article');
+      card.className = 'story-card';
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'listitem');
+      card.style.animationDelay = `${0.1 + index * 0.1}s`;
+
+      card.innerHTML = `
+        <h2 class="story-title">${story.title}</h2>
+        <p class="story-snippet">${story.snippet}</p>
+        <div class="story-footer" aria-hidden="true">Klik untuk baca lebih lanjut</div>
+      `;
+
+      // Click and keyboard events to open modal
+      card.addEventListener('click', () => openModal(index));
+      card.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openModal(index);
+        }
+      });
+
+      storiesContainer.appendChild(card);
+    });
+  }
+
+  // Open modal with selected story
+  function openModal(index) {
+    const story = stories[index];
+    modalTitle.textContent = story.title;
+    modalContent.textContent = story.full;
+    modalOverlay.classList.add('active');
+
+    // Trap focus on modal content
+    modalContent.focus();
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Close modal
+  function closeModal() {
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    // Return focus to anchor button or main content
+    btnScrollToStories.focus();
+  }
+
+  // Close modal on clicking close button or outside modal content
+  modalCloseBtn.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) {
+      closeModal();
+    }
+  });
+
+  // Close modal on Esc key press
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // Scroll button smooth behavior
+  btnScrollToStories.addEventListener('click', () => {
+    document.getElementById('stories').scrollIntoView({behavior: 'smooth'});
+  });
+
+  // Initial render stories on DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', renderStories);
+
+</script>
+</body>
+</html>
